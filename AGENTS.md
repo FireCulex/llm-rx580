@@ -2,14 +2,7 @@
 
 Benchmarking AMD Polaris (RX 580) on CachyOS (Arch Linux) with llama.cpp Vulkan backend.
 
-## Build (llama.cpp)
-
-```
-cmake -B build -DGGML_VULKAN=ON
-cmake --build build -j$(nproc)
-```
-
-Requires `glslc`, `cmake`, Vulkan driver. Clone from https://github.com/ggml-org/llama.cpp.
+Build instructions: `SETUP.md`.
 
 ## Run benchmarks
 
@@ -45,8 +38,7 @@ See `BENCHMARKS.md`. Q4_K_M is the default quantization. Models tested: llama-3.
 
 ## Structure
 
-- `SETUP.md` — build & hardware details
-- `RUN.md` — (stub, unused)
-- `MODELS.md` — model sources & download links
+- `bench.py` — single entrypoint for all benchmarks
 - `BENCHMARKS.md` — results & analysis
-- `bench.py` — benchmark script
+- `MODELS.md` — model download links and source info
+- `SETUP.md` — build & hardware details
