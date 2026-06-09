@@ -1,10 +1,13 @@
 # Setup
 
 Build llama.cpp with Vulkan support:
-    git clone https://github.com/ggml-org/llama.cpp
-    cd llama.cpp
-    cmake -B build -DGGML_VULKAN=ON
-    cmake --build build -j$(nproc)
+
+```bash
+git clone https://github.com/ggml-org/llama.cpp
+cd llama.cpp
+cmake -B build -DGGML_VULKAN=ON
+cmake --build build -j$(nproc)
+```
 
 Requires `glslc` (Vulkan SDK), `cmake`, and a Vulkan-capable driver.
 
