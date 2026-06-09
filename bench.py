@@ -85,7 +85,7 @@ def cleanup(proc: subprocess.Popen | None) -> None:
         proc.wait()
 
 
-def wait_for_server(timeout: int = 60) -> None:
+def wait_for_server(timeout: int = 120) -> None:
     for _ in range(timeout):
         try:
             r = requests.get(f"{BASE_URL}/health", timeout=2)
@@ -151,8 +151,8 @@ def run_bench_request(system: str, user: str, n_gen: int) -> dict:
     timings = data.get("timings", {})
     pp = timings.get("prompt_per_second")
     tg = timings.get("predicted_per_second")
-    pp = round(pp, 2) if pp else "?"
-    tg = round(tg, 2) if tg else "?"
+    pp = int(pp) if pp else "?"
+    tg = int(tg) if tg else "?"
 
     return {
         "prompt_tokens": pt,
@@ -258,7 +258,7 @@ def main() -> None:
                         r["tg_tps"] for r in results
                         if isinstance(r["tg_tps"], (int, float))
                     ]
-                    avg_tg = round(sum(tg_samples) / len(tg_samples), 2) if tg_samples else "?"
+                    avg_tg = int(sum(tg_samples) / len(tg_samples)) if tg_samples else "?"
 
                     bw_pct = round(avg_tg * model_size_gb / GPU_BW_GBS * 100, 1) if isinstance(avg_tg, (int, float)) else "?"
                     row = (

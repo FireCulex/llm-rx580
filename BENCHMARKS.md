@@ -13,30 +13,33 @@ Bandwidth utilization = `tg_tps × model_size_gb / 256`.
 
 | model | size | ctx | elapsed_s | pp_tps | tg_tps (avg) | bw util % |
 |---|---|---|---|---|---|---|
-| Llama-3.2-3B-Instruct-Q4_K_M | 2.02 | 120576 | 13 | 470.10 | 61.40 | 48.4 |
-| Qwen3.5-4B-Q4_K_M | 2.74 | 262144 | 18 | 361.41 | 39.90 | 42.7 |
-| gemma-4-E4B-Q4_K_M | 4.98 | 131072 | 22 | 306.06 | 34.67 | 67.4 |
-| Qwen3.5-9B-Q4_K_M | 5.87 | 66560 | 29 | 204.40 | 25.66 | 58.8 |
+| Llama-3.2-3B-Instruct-Q4_K_M | 2.02 | 131072 | 13 | 475 | 62 | 48.9 |
+| gemma-4-E4B-Q4_K_M | 4.98 | 131072 | 22 | 274 | 35 | 68.0 |
+| Qwen3.5-4B-Q4_K_M | 2.74 | 262144 | 18 | 340 | 38 | 40.7 |
+| Qwen3.5-4B-Q4_K_M-MTP | 2.83 | 240384 | 19 | 335 | 37 | 41.0 |
+| Qwen3.5-9B-Q4_K_M | 5.87 | 153600 | 28 | 204 | 24 | 55.0 |
 
 ## Generation throughput vs model size
 
 | Model | File size | tg_tps | GB/s read | BW util |
 |---|---|---|---|---|
-| Llama-3.2-3B-Instruct Q4_K_M | 2.02 GB | 61.40 | 124.0 | 48.4% |
-| Qwen3.5-4B Q4_K_M | 2.74 GB | 39.90 | 109.3 | 42.7% |
-| gemma-4-E4B Q4_K_M | 4.98 GB | 34.67 | 172.7 | 67.4% |
-| Qwen3.5-9B Q4_K_M | 5.87 GB | 25.66 | 150.6 | 58.8% |
+| Llama-3.2-3B-Instruct Q4_K_M | 2.02 GB | 62 | 125.2 | 48.9% |
+| Qwen3.5-4B Q4_K_M | 2.74 GB | 38 | 104.1 | 40.7% |
+| Qwen3.5-4B Q4_K_M-MTP | 2.83 GB | 37 | 104.7 | 41.0% |
+| gemma-4-E4B Q4_K_M | 4.98 GB | 35 | 174.3 | 68.0% |
+| Qwen3.5-9B Q4_K_M | 5.87 GB | 24 | 140.9 | 55.0% |
 
-Gemma achieves the highest utilization (67.4%) per GB transferred, suggesting it benefits from architecture-specific Vulkan optimizations.
+Gemma achieves the highest utilization (68.0%) per GB transferred, suggesting it benefits from architecture-specific Vulkan optimizations.
 
 ## Prompt processing throughput
 
 | Model | pp_tps |
 |---|---|
-| Llama-3.2-3B-Instruct Q4_K_M | 470.10 |
-| Qwen3.5-4B Q4_K_M | 361.41 |
-| gemma-4-E4B Q4_K_M | 306.06 |
-| Qwen3.5-9B Q4_K_M | 204.40 |
+| Llama-3.2-3B-Instruct Q4_K_M | 475 |
+| Qwen3.5-4B Q4_K_M | 340 |
+| Qwen3.5-4B Q4_K_M-MTP | 335 |
+| gemma-4-E4B Q4_K_M | 274 |
+| Qwen3.5-9B Q4_K_M | 204 |
 
 ## Quantization comparison (Qwen3.5-4B)
 
@@ -55,8 +58,8 @@ Qwen3.5-4B Q4_K_M-MTP tested with `--spec-type draft-mtp --spec-draft-n-max 2` (
 
 | Variant | tg_tps | Diff |
 |---|---|---|
-| Non-MTP | 39.90 | baseline |
-| MTP (temp=0) | 38.18 | -4.3% |
+| Non-MTP | 38 | baseline |
+| MTP (temp=0) | 37 | -2.6% |
 
 MTP does not help on Polaris. The verification pass overhead exceeds any batching benefit, even at greedy sampling where acceptance rate should be near 100%. In real-world use (Open WebUI, temp=1.0, penalties), acceptance rate was measured at 41.7% — well below the break-even threshold.
 
