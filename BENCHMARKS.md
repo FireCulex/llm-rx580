@@ -29,7 +29,7 @@ Bandwidth utilization = `tg_tps × model_size_gb / 256`.
 | gemma-4-E4B Q4_K_M | 4.98 GB | 35 | 93.0 | 36.3%† |
 | Qwen3.5-9B Q4_K_M | 5.87 GB | 24 | 140.9 | 55.0% |
 
-† Gemma-4-E4B is mixture-of-depths (~7.5B total, ~4B active/token). Utilization estimated from active parameters (~2.5 GB).
+† Gemma-4-E4B is MoE (~7.5B total, ~4B active/token). Utilization estimated from active parameters (~2.5 GB).
 
 ## Prompt processing throughput
 
